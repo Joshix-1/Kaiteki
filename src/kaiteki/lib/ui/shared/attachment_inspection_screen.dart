@@ -104,11 +104,20 @@ class _AttachmentInspectionScreenState
       body: RawKeyboardListener(
         focusNode: focusNode,
         autofocus: true,
-        onKey: (key) {
-          if (key.data.logicalKey == LogicalKeyboardKey.arrowLeft) {
-            previousPage();
-          } else if (key.data.logicalKey == LogicalKeyboardKey.arrowRight) {
-            nextPage();
+        onKey: (key) async {
+          switch(key.data.logicalKey) {
+            case LogicalKeyboardKey.arrowLeft: {
+              previousPage();
+              return;
+            }
+            case LogicalKeyboardKey.arrowRight: {
+              nextPage();
+              return;
+            }
+            case LogicalKeyboardKey.escape: {
+              await Navigator.maybePop(context);
+              return;
+            }
           }
         },
         child: Theme(
